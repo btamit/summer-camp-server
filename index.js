@@ -29,9 +29,14 @@ async function run() {
     await client.connect();
 
     const classCollection = client.db("martialDb").collection("martialClass");
+    const instructorsCollection = client.db("martialDb").collection("martialInstructors");
 
     app.get('/classes', async(req,res)=>{
         const result = await classCollection.find().toArray();
+        res.send(result);
+    })
+    app.get('/instructors', async(req,res)=>{
+        const result = await instructorsCollection.find().toArray();
         res.send(result);
     })
 
