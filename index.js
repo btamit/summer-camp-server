@@ -30,6 +30,8 @@ async function run() {
 
     const classCollection = client.db("martialDb").collection("martialClass");
     const instructorsCollection = client.db("martialDb").collection("martialInstructors");
+    const cartCollection = client.db("martialDb").collection("martialCarts");
+
 
     app.get('/classes', async(req,res)=>{
         const result = await classCollection.find().toArray();
@@ -40,6 +42,27 @@ async function run() {
         res.send(result);
     })
 
+
+    // API for cart collection
+
+    app.get('/carts', async(req,res) =>{
+      const email = req.query.email;
+      console.log(email);
+      if(!email){
+        res.send([])
+      }
+      const query = {email:email};
+      const result = await cartCollection.find(query).toArray();
+      res.send(result);
+
+
+    })
+    app.post('/carts', async(req,res)=>{
+      const classItem = req.body;
+      console.log(classItem);
+      const result = await cartCollection.insertOne(classItem);
+      res.send(result);
+    })
 
 
     // Send a ping to confirm a successful connection
