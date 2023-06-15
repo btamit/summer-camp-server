@@ -28,9 +28,18 @@ async function run() {
     // Connect the client to the server	(optional starting in v4.7)
     await client.connect();
 
+    const usersCollection = client.db("martialDb").collection("martialUsers");
     const classCollection = client.db("martialDb").collection("martialClass");
     const instructorsCollection = client.db("martialDb").collection("martialInstructors");
     const cartCollection = client.db("martialDb").collection("martialCarts");
+
+    // Users API
+     app.post("/users", async (req, res) => {
+       const users = req.body;
+       const result = await usersCollection.insertOne(users);
+       res.send(result);
+     });
+
 
 
     app.get('/classes', async(req,res)=>{
