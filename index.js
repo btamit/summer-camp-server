@@ -49,6 +49,7 @@ async function run() {
     const classCollection = client.db("martialDb").collection("martialClass");
     const instructorsCollection = client.db("martialDb").collection("martialInstructors");
     const cartCollection = client.db("martialDb").collection("martialCarts");
+    const paymentCollection = client.db("martialDb").collection("martialPayments");
 
     app.post('/jwt',(req,res)=>{
       const user = req.body;
@@ -189,7 +190,12 @@ async function run() {
         clientSecret: paymentIntent.client_secret
       })
     })
-
+    // Payment APi
+    app.post('/payments',verifyJWT, async(req,res)=>{
+      const payment = req.body;
+      const result = await paymentCollection.insertOne(payment)
+      res.send(result);
+    })
 
 
 
