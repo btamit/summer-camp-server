@@ -113,11 +113,24 @@ async function run() {
       const result = await usersCollection.updateOne(filter, updateDoc);
       res.send(result);
     })
-
+    // Class API
     app.get('/classes', async(req,res)=>{
         const result = await classCollection.find().toArray();
         res.send(result);
     })
+
+    app.post('/classes',verifyJWT,verifyAdmin, async(req,res)=>{
+      const newClass = req.body;
+        const result = await classCollection.insertOne(newClass);
+        res.send(result);
+    })
+
+
+
+
+
+
+
     app.get('/instructors', async(req,res)=>{
         const result = await instructorsCollection.find().toArray();
         res.send(result);
