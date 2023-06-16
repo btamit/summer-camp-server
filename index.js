@@ -175,7 +175,7 @@ async function run() {
       res.send(result);
     })
 
-    // Payment Intention
+    // Payment Intention API 
 
     app.post('/create-payment-intent',verifyJWT, async(req,res) =>{
       const {price} = req.body;
